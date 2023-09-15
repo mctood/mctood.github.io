@@ -1,0 +1,39 @@
+.container {
+    padding: 50px;
+}
+#nav {
+    font-family: Consolas;
+}
+.navbrand {
+    line-height: 1;
+}
+.quote::before {
+    content: "Пожамкал жабу";
+}
+td.navbrand {
+    padding-left: 10px;
+}
+.caption {
+    font-size: 0.7em;
+    color: gray;
+}
+.social {
+    color: white !important;
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    /*border: var(--bs-border-color) 1px solid;*/
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.badge {
+    margin: 5px;
+}
+.friend {
+    margin: 0 10px 10px 10px;
+}
+body {
+    background-color: var(--bs-body-bg);
+}
