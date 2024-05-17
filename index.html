@@ -7,14 +7,23 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script>
 		let bq;
+		let bufoClicks = 0;
+
 		document.addEventListener("DOMContentLoaded", function () {
+			$("#froggo").click(() => {
+				bufoClicks++;
+				if (bufoClicks == 50) {
+					$("#froggo").addClass("cool");
+					$("#froggo").attr("src", "./cool_froggo.svg")
+				}
+			})
 			$('.fade').each((i, e) => {
 				$(e).attr("style", `animation-delay: ${($(e).attr("queue") - 1) * 0.2}s`)
 			})
 			$('.fadeOut').each((i, e) => {
 				$(e).attr("style", `animation-delay: ${($(e).attr("queue") - 1) * 0.2}s`)
 			})
-			$('.variant').each((i, e) => {
+			$('.action').each((i, e) => {
 				$(e).attr("style", `animation-delay: ${($(e).attr("queue") - 1) * 0.2}s`)
 			})
 			const quotes = [
@@ -33,26 +42,10 @@
 			let rand = quotes[Math.floor(Math.random() * quotes.length)]
 			bq = new TypeIt("#blockquote", {speed: 30})
 				.type(rand, {delay: 400})
-				.exec(() => $('.variant').addClass('fade').css({display: 'inline-block'}))
+				.exec(() => $('.action').addClass('fade').css({display: 'inline-block'}))
 				.go()
 			$(".ti-cursor").addClass("bq-cursor")
 		});
-		function skills() {
-			$("#blockquote").addClass("fadeOut")
-			setTimeout(() => $(".actions").addClass("fadeOut"), 200);
-			$("#skills").show();
-			bq.destroy(true);
-			new TypeIt("#skills", {speed: 30, strings: [
-					"HTML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 99%</span>",
-					"CSS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 75%</span>",
-					"JavaScript&nbsp;&nbsp;<span style='color: grey'>- 90%</span>",
-					"React&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 40%</span>",
-					"PHP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 80%</span>",
-					"Python&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 60%</span>",
-					"Node.js&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: grey'>- 85%</span>",
-				]})
-				.go()
-		}
 	</script>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
@@ -90,6 +83,9 @@
 			font-weight: bolder;
 			
 			font-size: 6em;
+		}
+		.cool {
+			animation: jmak .5s ease-in-out infinite !important;
 		}
 		@keyframes jmak {
 			0% {
@@ -170,7 +166,7 @@
 			width: 80%;
 		}
 		.froggo {
-			position: absolute;
+			position: fixed;
 			bottom: 0;
 			right: 50px;
 			cursor: pointer;
@@ -201,37 +197,61 @@
 			.hidable {
 				display: none;
 			}
-			.variant:first-child {
-				margin: 0 0 20px 0;
+			.string {
+				display: none;
+			}
+			.actions {
+				display: flex;
+				flex-direction: column;
+			}
+			.action {
+				padding: 15px !important;
+				margin: 10px 0;
 			}
 		}
-		.variant {
-			opacity: 0;
-			color: grey;
-			text-decoration: underline;
+		
+		.actions {
+			cursor: default;
+			margin-top: 20px;
+		}
+		
+		.string {
+			position: fixed;
+			top: -60px;
+			left: 40px;
+			animation: string .8s forwards cubic-bezier(0.5, -0.01, 0, 2.08);
+			transition: .5s;
+		}
+		.string:hover {
+			cursor: pointer;
+			transform: translateY(8px);
+		}
+		@keyframes string {
+			0% {
+				top: -60px;
+				opacity: 0;
+			}
+			100% {
+				top: -20px;
+				opacity: 1;
+			}
+		}
+		.action {
+			padding: 10px;
+			border: 1px solid #fff;
+			border-bottom: 2px solid #fff;
 			display: none;
 			transition: .35s;
 		}
-		.actions {
-			cursor: default;
-		}
-		.variant:hover {
-			color: rgb(173, 173, 173);
+		.action:hover {
 			cursor: pointer;
-
-		}
-		.variant:first-child {
-			margin-right: 15px;
-		}
-		.skills {
-			display: none;
-			font-size: medium;
-			font-size: 2em;
-			font-weight: 500;
+			background-color: #fff;
+			color: #000;
 		}
 	</style>
 </head>
 <body>
+	<img src="./string.svg" alt="" class="string">
 	<div class="content">
 		<div class="header">
 			<div class="item fade" queue="1">
@@ -250,14 +270,21 @@
 		<div class="main">
 			<h1 id="blockquote" class="fade" queue="2"></h1>
 			<div class="actions">
-				<span id="v1" class="variant" queue="1" onclick="skills()">Печатать список навыков</span>
-				<span id="v2" class="variant" queue="2" onclick="info()">Печатать дополнительную информацию</span>
+				<div class="action" queue="1">
+					Мои сервисы
+				</div>
+				<div class="action" queue="2">
+					Предложить цитату
+				</div>
+				<div class="action" queue="3" onclick="location.href='./random_bufo.html'">
+					Случайная жаба
+				</div>
 			</div>
 			<div id="skills" class="skills">
 
 			</div>
 		</div>
 	</div>
-	<img src="./froggo.svg" alt="JABA" class="froggo" queue="1" onmousedown="$(this).removeClass('jmak');void this.offsetWidth;$(this).addClass('jmak');">
+	<img src="./froggo.svg" alt="JABA" class="froggo fade" id="froggo" queue="1" onmousedown="$(this).removeClass('fade'); if (bufoClicks < 50) $(this).removeClass('jmak');void this.offsetWidth;$(this).addClass('jmak');">
 </body>
 </html>
