@@ -40,8 +40,7 @@
 				"Рыба ищет где глубже, а жаба - где подержат.",
 				"Хлебом не корми, дай жабу подержать. <img src='./bkbbk.svg' style='width: 1em; opacity: .5' />",
 			]
-			let rand = //quotes[Math.floor(Math.random() * quotes.length)]
-			quotes[11]
+			let rand = quotes[Math.floor(Math.random() * quotes.length)]
 			bq = new TypeIt("#blockquote", {speed: 30})
 				.type(rand, {delay: 400})
 				.exec(() => $('.action').addClass('fade').css({display: 'inline-block'}))
