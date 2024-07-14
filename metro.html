@@ -1,0 +1,109 @@
+<script src="./stations.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<a href="/" class="author">rogatus.ru</a>
+<h2>Генератор случайных станций Московского метро</h2>
+<form target="_self">
+    <input type="number" class="input" id="howmuch" max="100" min="1" required="1" value="5" placeholder="Количество" />
+    <button id="submit" class="button">Сгенерировать станции</button>
+</form>
+<div class="stations">
+
+</div>
+<script>
+    $(() => {
+        $('form').submit((e) => {
+            e.preventDefault();
+        })
+        $('#submit').click(() => {
+            $('.stations').text("");
+            for (var i = 0; i < parseInt($('#howmuch').val()); i++) {
+                setTimeout(() => {
+                    let sel = _.sample(STATIONS).split('\t');
+                    $('.stations').append("<div class='station'><img class='line' src='./assets/Moskwa_Metro_Line_" + sel[0] + ".svg.png'/>" +
+                        sel[1]
+                    + "</div>");
+                }, 100*i)
+                
+            }
+        })
+    })
+    
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+    body {
+        background: #000;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    h2 {
+        margin: 20px 0 40px 0;
+        text-align: center;
+    }
+    .author {
+        margin: 10px 0;
+        color: aliceblue;
+    }
+    * {
+        font-family: "JetBrains Mono", monospace;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .button {
+        padding: 10px;
+        border: 1px solid #fff;
+        border-bottom: 2px solid #fff;
+        transition: .1s;
+        background: none;
+        color: #fff;
+        cursor: pointer;
+    }
+    .button:hover {
+        background: rgba(255, 255, 255, .1);
+    }
+    .input {
+        width: calc(10ch + 20px);
+        padding: 10px;
+        color: #fff;
+        border: 0px;
+        border-bottom: 2px solid #fff;
+        background: none;
+    }
+    .line {
+        --size: 18px;
+        width: var(--size);
+        height: var(--size);
+        margin-right: 10px;
+    }
+    .station {
+        width: 300px;
+        margin-bottom: 10px;
+        padding: 10px;
+        display: flex;
+        background: rgba(255, 255, 255, .1);
+        border-radius: 5px;
+        animation: appear .2s ease-in-out forwards;
+    }
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+    @keyframes appear {
+        0% {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: none;
+        }
+    }
+</style>
